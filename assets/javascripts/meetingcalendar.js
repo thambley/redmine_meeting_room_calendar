@@ -68,6 +68,9 @@
           //  events to be rendered on fullcalendar
           // building events json for fullcalendar
           for (var i = 0; i < count; i++) {
+              if(event[i].custom_fields == undefined){
+                  continue;
+              }
               var eventIndexRoom = 0;
               var eventIndexStart = 1;
               var eventIndexEnd = 5;
@@ -105,24 +108,26 @@
               if (isCurrentUser(event[i].author.id, assigned_to_id)) {
                   eventClassName = 'myEvents';
               }
-              eventsJSON.push({
-                  title : event[i].subject,
-                  author : author_name,
-                  start : start_time,
-                  end : end_time,
-                  subject : event[i].subject,
-                  start_date : event[i].start_date,
-                  due_date : event[i].due_date,
-                  starttime : +start_time_arr[0] + ':' + start_time_arr[1],
-                  endtime : +end_time_arr[0] + ':' + end_time_arr[1],
-                  event_id : event_id,
-                  event_author_id : event[i].author.id,
-                  assigned_to_id : assigned_to_id,
-                  assigned_to_name : assigned_to_name,
-                  className : eventClassName,
-                  cache : true,
-                  allDay : false
-              });
+              if(meeting_room==$('#meeting_rooms').val()){
+                  eventsJSON.push({
+                      title : event[i].subject,
+                      author : author_name,
+                      start : start_time,
+                      end : end_time,
+                      subject : event[i].subject,
+                      start_date : event[i].start_date,
+                      due_date : event[i].due_date,
+                      starttime : +start_time_arr[0] + ':' + start_time_arr[1],
+                      endtime : +end_time_arr[0] + ':' + end_time_arr[1],
+                      event_id : event_id,
+                      event_author_id : event[i].author.id,
+                      assigned_to_id : assigned_to_id,
+                      assigned_to_name : assigned_to_name,
+                      className : eventClassName,
+                      cache : true,
+                      allDay : false
+                  });
+              }
           }
           return true;
       }
