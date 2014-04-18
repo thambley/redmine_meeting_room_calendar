@@ -1,6 +1,6 @@
 # English strings go here for Rails i18n
 en:
-  label_name: "Meeting rooms"
+  label_name: "Meetings Calendar"
   label_meeting_date: "Date"
   label_booked_by: "Booked by"
   label_assigned_to: "Assigned to"
@@ -17,9 +17,9 @@ en:
   label_update_event: "Update an Event"
   label_create_event: "Create an Event"
   label_invalid_subject: "Please enter a valid subject"
-  label_room_already_booked: "Meeting room already booked"
+  label_room_already_booked: "Meeting resource already booked"
   label_goto: "Go to"
-  label_meeting_room: "Meeting room"
+  label_meeting_room: "Meeting resource"
   label_subject: "Subject"
   label_recur: "Recur"
   label_save: "Save"
@@ -35,7 +35,7 @@ en:
   label_missing_config: "Plugin not configured correctly! See Administration -> Plugins -> Configuration"
   label_setting_project_id: "Project"
   label_setting_tracker_id: "Tracker"
-  label_setting_custom_field_id_room: "Custom field 'Room'"
+  label_setting_custom_field_id_room: "Custom field 'Resource'"
   label_setting_custom_field_id_start: "Custom field 'Start'"
   label_setting_custom_field_id_end: "Custom field 'End'"
   label_setting_show_project_menu: "Show project menu"
