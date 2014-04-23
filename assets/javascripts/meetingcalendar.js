@@ -25,7 +25,8 @@
           $.ajax({
               url : 'issues.json',
               dataType : 'json',
-              data : 'key=' + api_key + '&project_id=' + project_id + '&cf_' + fieldIdRoom + '=' + meeting_room + '&start_date=>=' + today + '&limit=' + 100 + '&offset=' + offset,
+              //data : 'key=' + api_key + '&project_id=' + project_id + '&cf_' + fieldIdRoom + '=' + meeting_room + '&start_date=>=' + today + '&limit=' + 100 + '&offset=' + offset,
+							data : 'key=' + api_key + '&tracker_id=' + tracker_id + '&cf_' + fieldIdRoom + '=' + meeting_room + '&start_date=>=' + today + '&limit=' + 100 + '&offset=' + offset,
               beforeSend : function(xhr) {
                   showSpinner();
               },
@@ -86,11 +87,13 @@
 
               var eventClassName = '';
               var event_id = event[i].id;
-              author_name = event[i].author.name;
-              start_time_arr = event[i].custom_fields[eventIndexStart].value.split(':');
-              end_time_arr = event[i].custom_fields[eventIndexEnd].value.split(':');
-              meeting_room = event[i].custom_fields[eventIndexRoom].value;
-              meeting_day_arr = event[i].start_date.split('-');
+              var author_name = event[i].author.name;
+              var start_time_arr = event[i].custom_fields[eventIndexStart].value.split(':');
+              var end_time_arr = event[i].custom_fields[eventIndexEnd].value.split(':');
+              var meeting_room = event[i].custom_fields[eventIndexRoom].value;
+							var meeting_room_arr = meeting_room.toString().split(',');
+							
+              var meeting_day_arr = event[i].start_date.split('-');
               var start_time = new Date(meeting_day_arr[0], meeting_day_arr[1] - 1, meeting_day_arr[2], start_time_arr[0], start_time_arr[1]);
               var end_time = new Date(meeting_day_arr[0], meeting_day_arr[1] - 1, meeting_day_arr[2], end_time_arr[0], end_time_arr[1]);
               var assigned_to_id = event[i].author.id;
@@ -108,26 +111,29 @@
               if (isCurrentUser(event[i].author.id, assigned_to_id)) {
                   eventClassName = 'myEvents';
               }
-              if(meeting_room==$('#meeting_rooms').val()){
-                  eventsJSON.push({
-                      title : event[i].subject,
-                      author : author_name,
-                      start : start_time,
-                      end : end_time,
-                      subject : event[i].subject,
-                      start_date : event[i].start_date,
-                      due_date : event[i].due_date,
-                      starttime : +start_time_arr[0] + ':' + start_time_arr[1],
-                      endtime : +end_time_arr[0] + ':' + end_time_arr[1],
-                      event_id : event_id,
-                      event_author_id : event[i].author.id,
-                      assigned_to_id : assigned_to_id,
-                      assigned_to_name : assigned_to_name,
-                      className : eventClassName,
-                      cache : true,
-                      allDay : false
-                  });
-              }
+							for (var j = 0; j < meeting_room_arr.length; j++) {
+								meeting_room = meeting_room_arr[j];
+								if(meeting_room==$('#meeting_rooms').val()){
+										eventsJSON.push({
+												title : event[i].subject,
+												author : author_name,
+												start : start_time,
+												end : end_time,
+												subject : event[i].subject,
+												start_date : event[i].start_date,
+												due_date : event[i].due_date,
+												starttime : +start_time_arr[0] + ':' + start_time_arr[1],
+												endtime : +end_time_arr[0] + ':' + end_time_arr[1],
+												event_id : event_id,
+												event_author_id : event[i].author.id,
+												assigned_to_id : assigned_to_id,
+												assigned_to_name : assigned_to_name,
+												className : eventClassName,
+												cache : true,
+												allDay : false
+										});
+								}
+							}
           }
           return true;
       }
