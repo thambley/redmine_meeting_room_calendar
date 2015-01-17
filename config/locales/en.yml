@@ -39,6 +39,7 @@ en:
   label_setting_custom_field_id_start: "Custom field 'Start'"
   label_setting_custom_field_id_end: "Custom field 'End'"
   label_setting_show_project_menu: "Show project menu"
+  button_add_to_calendar: "Add to calendar"
 
   datetime_title_format_day: "dddd, MMM d, yyyy"
   datetime_title_format_week: "MMM d[ yyyy]{ -[ MMM] d yyyy}"

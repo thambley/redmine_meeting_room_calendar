@@ -1,5 +1,7 @@
 require 'redmine'
 
+require_dependency 'redmine_meeting_room_calendar/hooks'
+
 Redmine::Plugin.register :redmine_meeting_room_calendar do
   name 'Redmine Meeting Room Calendar plugin'
   author 'QBurst, Tobias Droste'
