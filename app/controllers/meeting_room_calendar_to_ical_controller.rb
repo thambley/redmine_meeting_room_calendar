@@ -1,4 +1,4 @@
-class AddToCalendarController < ApplicationController
+class MeetingRoomCalendarToIcalController < ApplicationController
   unloadable
 
   def initialize
@@ -25,7 +25,7 @@ class AddToCalendarController < ApplicationController
     event = issue_event(issue)
     calendar.add_event(event)
 
-    send_data calendar.to_ical, type: :ics, filename: "task_#{issue.id}.ics"
+    send_data calendar.to_ical, type: :ics, filename: "meeting_#{issue.id}.ics"
   end
 
   private

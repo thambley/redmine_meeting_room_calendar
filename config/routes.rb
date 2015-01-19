@@ -7,4 +7,4 @@ match 'meeting_room_calendar/missing_config', :to => 'meeting_room_calendar#miss
 match 'meeting_room_calendar/create', :to => 'meeting_room_calendar#create'
 match 'meeting_room_calendar/update', :to => 'meeting_room_calendar#update'
 match 'meeting_room_calendar/delete', :to => 'meeting_room_calendar#delete'
-match 'add_to_calendar/issue' => 'add_to_calendar#issue'
+match 'meeting_room_calendar_to_ical/issue' => 'meeting_room_calendar_to_ical#issue'

@@ -2,6 +2,6 @@ module RedmineMeetingRoomCalendar
   class Hooks < Redmine::Hook::ViewListener
     include Redmine::I18n
 
-    render_on :view_issues_form_details_bottom, :partial => 'issues/add_to_calendar'
+    render_on :view_issues_form_details_bottom, :partial => 'issues/meeting_room_calendar_to_ical'
   end
 end
