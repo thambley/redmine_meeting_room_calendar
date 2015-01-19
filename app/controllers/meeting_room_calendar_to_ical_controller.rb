@@ -1,5 +1,7 @@
 class MeetingRoomCalendarToIcalController < ApplicationController
   unloadable
+  
+  include ApplicationHelper
 
   def initialize
     super()
@@ -50,7 +52,7 @@ class MeetingRoomCalendarToIcalController < ApplicationController
       e.url = issue_url(issue)
       e.transp = "OPAQUE"
       
-      #e.append_custom_property("X-ALT-DESC", Icalendar::Values::Text.new("<b>TEST</b>", { "FMTTYPE" => "text/html" }))
+      e.append_custom_property("X-ALT-DESC", Icalendar::Values::Text.new(textilizable(issue, :description, :only_path => false), { "FMTTYPE" => "text/html" }))
     end
   end
 
