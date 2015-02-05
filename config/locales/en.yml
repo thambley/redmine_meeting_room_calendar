@@ -38,6 +38,10 @@ en:
   label_setting_custom_field_id_room: "Custom field 'Resource'"
   label_setting_custom_field_id_start: "Custom field 'Start'"
   label_setting_custom_field_id_end: "Custom field 'End'"
+  label_setting_custom_field_id_invited: "Custom field 'invited'"
+  label_setting_custom_field_id_attended: "Custom field 'attended'"
+  label_setting_custom_field_id_notes: "Custom field 'meeting notes'"
+  
   label_setting_show_project_menu: "Show project menu"
   button_meeting_room_calendar_to_ical: "Add to calendar"
 

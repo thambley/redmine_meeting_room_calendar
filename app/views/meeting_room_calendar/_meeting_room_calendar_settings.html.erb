@@ -23,6 +23,20 @@
   <%= label_tag("settings[custom_field_id_end]", l(:label_setting_custom_field_id_end)) %>
   <%= select_tag("settings[custom_field_id_end]", options_for_select([["", 0]] + custom_fields_issues.collect{|c| [c.name, c.id]}, (@settings["custom_field_id_end"] || 0))) %>
 </p>
+<%- user_custom_fields_issues = CustomField.find(:all, :conditions => "type = 'IssueCustomField' and field_format = 'user'") %>
+<p>
+  <%= label_tag("settings[custom_field_id_invited]", l(:label_setting_custom_field_id_invited)) %>
+  <%= select_tag("settings[custom_field_id_invited]", options_for_select([["", 0]] + user_custom_fields_issues.collect{|c| [c.name, c.id]}, (@settings["custom_field_id_invited"] || 0))) %>
+</p>
+<p>
+  <%= label_tag("settings[custom_field_id_attended]", l(:label_setting_custom_field_id_attended)) %>
+  <%= select_tag("settings[custom_field_id_attended]", options_for_select([["", 0]] + user_custom_fields_issues.collect{|c| [c.name, c.id]}, (@settings["custom_field_id_attended"] || 0))) %>
+</p>
+<%- text_custom_fields_issues = CustomField.find(:all, :conditions => "type = 'IssueCustomField' and field_format = 'text'") %>
+<p>
+  <%= label_tag("settings[custom_field_id_notes]", l(:label_setting_custom_field_id_notes)) %>
+  <%= select_tag("settings[custom_field_id_notes]", options_for_select([["", 0]] + text_custom_fields_issues.collect{|c| [c.name, c.id]}, (@settings["custom_field_id_notes"] || 0))) %>
+</p>
 <p>
   <%= label_tag("settings[show_project_menu]", l(:label_setting_show_project_menu)) %>
   <%= check_box_tag("settings[show_project_menu]", 1, (@settings["show_project_menu"] == '1')) %>

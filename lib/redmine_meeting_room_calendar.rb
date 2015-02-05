@@ -1,0 +1,1 @@
+require 'redmine_meeting_room_calendar/hooks/view_issues_form_details_bottom'

@@ -2,6 +2,7 @@ class MeetingRoomCalendarToIcalController < ApplicationController
   unloadable
   
   include ApplicationHelper
+  include MeetingRoomCalendarHelper
 
   def initialize
     super()
@@ -10,6 +11,7 @@ class MeetingRoomCalendarToIcalController < ApplicationController
     @custom_field_id_room = Setting["plugin_redmine_meeting_room_calendar"]["custom_field_id_room"].to_i
     @custom_field_id_start = Setting["plugin_redmine_meeting_room_calendar"]["custom_field_id_start"].to_i
     @custom_field_id_end = Setting["plugin_redmine_meeting_room_calendar"]["custom_field_id_end"].to_i
+    @custom_field_id_invited = Setting["plugin_redmine_meeting_room_calendar"]["custom_field_id_invited"].to_i
 
   end
   
@@ -49,6 +51,13 @@ class MeetingRoomCalendarToIcalController < ApplicationController
       
       e.summary = issue.subject
       e.description = issue.description
+      attendee_emails = get_user_emails(issue)
+      if attendee_emails && params[:include_invited] == '1'
+        attendee_emails.each do |mail|
+          e.append_attendee "mailto:#{mail}"
+        end
+      end
+      e.ip_class = "PRIVATE" if issue.is_private
       e.url = issue_url(issue)
       e.transp = "OPAQUE"
       
@@ -62,6 +71,19 @@ class MeetingRoomCalendarToIcalController < ApplicationController
   
   def get_custom_field(issue, custom_field_id)
     issue.custom_field_values.select { |cf| cf.custom_field_id == custom_field_id }.first
+  end
+  
+  def invited_users(issue)
+    return false if @custom_field_id_invited.blank? || @custom_field_id_invited.to_s == "0"
+    invited_field = get_custom_field(issue, @custom_field_id_invited).value
+    return false if invited_field && invited_field[0].blank?
+    return invited_field
+  end
+  
+  def get_user_emails(issue)
+    users = invited_users(issue)
+    return false unless users
+    User.find(users).collect(&:mail)
   end
   
   def check_settings()

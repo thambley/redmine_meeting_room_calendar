@@ -6,5 +6,33 @@
         '<%= link_to l(:button_meeting_room_calendar_to_ical), {:controller => 'meeting_room_calendar_to_ical', :action => 'issue', :issue_id => @issue }, :class => 'icon icon-close redmine-meeting-room-calendar-to-ical-button' %>'
       )
     }
+	
+  <% end -%>
+  <% custom_field_id_invited = Setting["plugin_redmine_meeting_room_calendar"]["custom_field_id_invited"] %>
+  <% if custom_field_id_invited.present? && custom_field_id_invited.to_i != 0 %>
+	<% invited_field = @issue.custom_field_values.select { |cf| cf.custom_field_id == custom_field_id_invited.to_i }.first.value  %>
+	<% if invited_field && invited_field[0].present? %>
+		<%= javascript_tag do -%>
+		$(".redmine-meeting-room-calendar-to-ical-button").click(function(){
+			if(confirm("Include Invited?")){
+				$(".redmine-meeting-room-calendar-to-ical-button").each(function() {
+					var href = $(this).attr('href');
+					if(href) {
+						href += (href.match(/\?/) ? '&' : '?') + 'include_invited=1';
+						$(this).attr('href', href);
+					}
+				});
+			} else {
+				$(".redmine-meeting-room-calendar-to-ical-button").each(function() {
+					var href = $(this).attr('href');
+					if(href) {
+						href += (href.match(/\?/) ? '&' : '?') + 'include_invited=0';
+						$(this).attr('href', href);
+					}
+				});
+			}
+		});
+		<% end -%>
+	<% end -%>
   <% end -%>
 <% end %>

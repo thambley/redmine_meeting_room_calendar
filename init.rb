@@ -1,6 +1,8 @@
 require 'redmine'
 
-require_dependency 'redmine_meeting_room_calendar/hooks'
+Rails.configuration.to_prepare do
+  require 'redmine_meeting_room_calendar'
+end
 
 Redmine::Plugin.register :redmine_meeting_room_calendar do
   name 'Redmine Meeting Room Calendar plugin'
@@ -17,6 +19,9 @@ Redmine::Plugin.register :redmine_meeting_room_calendar do
                         "custom_field_id_room" => "0",
                         "custom_field_id_start" => "0",
                         "custom_field_id_end" => "0",
+                        "custom_field_id_invited" => "0",
+                        "custom_field_id_attended" => "0",
+                        "custom_field_id_notes" => "0",
                         "show_project_menu" => "1"},
            :partial => "meeting_room_calendar/meeting_room_calendar_settings"
 end
