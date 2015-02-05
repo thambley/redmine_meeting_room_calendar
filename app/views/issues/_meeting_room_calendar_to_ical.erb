@@ -1,38 +1,61 @@
 <% if (Setting["plugin_redmine_meeting_room_calendar"]["tracker_id"]).to_i == @issue.tracker_id %>
-<%= stylesheet_link_tag("meeting_room_calendar_to_ical.css", :plugin => 'redmine_meeting_room_calendar') %>
+  <%= stylesheet_link_tag("meeting_room_calendar_to_ical.css", :plugin => 'redmine_meeting_room_calendar') %>
   <%= javascript_tag do -%>
     if ($('#content > .contextual .redmine-add-to-calendar-button').length == 0) {
       $('#content > .contextual').prepend(
         '<%= link_to l(:button_meeting_room_calendar_to_ical), {:controller => 'meeting_room_calendar_to_ical', :action => 'issue', :issue_id => @issue }, :class => 'icon icon-close redmine-meeting-room-calendar-to-ical-button' %>'
       )
     }
-	
   <% end -%>
   <% custom_field_id_invited = Setting["plugin_redmine_meeting_room_calendar"]["custom_field_id_invited"] %>
   <% if custom_field_id_invited.present? && custom_field_id_invited.to_i != 0 %>
-	<% invited_field = @issue.custom_field_values.select { |cf| cf.custom_field_id == custom_field_id_invited.to_i }.first.value  %>
-	<% if invited_field && invited_field[0].present? %>
-		<%= javascript_tag do -%>
-		$(".redmine-meeting-room-calendar-to-ical-button").click(function(){
-			if(confirm("Include Invited?")){
-				$(".redmine-meeting-room-calendar-to-ical-button").each(function() {
-					var href = $(this).attr('href');
-					if(href) {
-						href += (href.match(/\?/) ? '&' : '?') + 'include_invited=1';
-						$(this).attr('href', href);
-					}
-				});
+    <% invited_field = @issue.custom_field_values.select { |cf| cf.custom_field_id == custom_field_id_invited.to_i }.first.value  %>
+    <% if invited_field && invited_field[0].present? %>
+      <%= javascript_tag do -%>
+        $(".redmine-meeting-room-calendar-to-ical-button").click(function(){
+          if(confirm("Include Invited?")){
+            $(".redmine-meeting-room-calendar-to-ical-button").each(function() {
+              var href = $(this).attr('href');
+              if(href) {
+                href += (href.match(/\?/) ? '&' : '?') + 'include_invited=1';
+                $(this).attr('href', href);
+              }
+            });
+          } else {
+            $(".redmine-meeting-room-calendar-to-ical-button").each(function() {
+              var href = $(this).attr('href');
+              if(href) {
+                href += (href.match(/\?/) ? '&' : '?') + 'include_invited=0';
+                $(this).attr('href', href);
+              }
+            });
+          }
+        });
+      <% end -%>
+	  <% custom_field_id_attended = Setting["plugin_redmine_meeting_room_calendar"]["custom_field_id_attended"] %>
+	  <% if custom_field_id_attended.present? && custom_field_id_attended.to_i != 0 %>
+	    <%= javascript_tag do -%>
+	      $("label[for='issue_custom_field_values_<%= custom_field_id_attended %>']").append('<br/><a id="auto_fill_issue_custom_field_values_<%= custom_field_id_attended %>">Auto-Fill</a>');
+	      $("#auto_fill_issue_custom_field_values_<%= custom_field_id_attended %>").click(function(){
+			var values = [];
+			checked_users = $('label[for="issue_custom_field_values_<%= custom_field_id_invited %>"]').parent().find(':checked');
+			checked_users.each(function(){ values.push($(this).val()); });
+			var destination_select = $('select#issue_custom_field_values_<%= custom_field_id_attended %>');
+			if (destination_select.length > 0) {
+			  destination_select.val(values);
 			} else {
-				$(".redmine-meeting-room-calendar-to-ical-button").each(function() {
-					var href = $(this).attr('href');
-					if(href) {
-						href += (href.match(/\?/) ? '&' : '?') + 'include_invited=0';
-						$(this).attr('href', href);
-					}
-				});
+			  $('label[for="issue_custom_field_values_<%= custom_field_id_attended %>"]').parent().find('input[type="checkbox"]').each(function() {
+				if ($.inArray($(this).val(),values) > -1) {
+				  $(this).prop('checked',true);
+				} else {
+				  $(this).prop('checked',false);
+				}
+			  });
 			}
-		});
+			return false;
+	      });
 		<% end -%>
-	<% end -%>
+	  <% end -%>
+    <% end -%>
   <% end -%>
 <% end %>
