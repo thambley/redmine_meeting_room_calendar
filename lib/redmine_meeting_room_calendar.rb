@@ -1,1 +1,2 @@
-require 'redmine_meeting_room_calendar/hooks/view_issues_form_details_bottom'
+require 'redmine_meeting_room_calendar/hooks/view_issues_form_details_icalendar'
+require 'redmine_meeting_room_calendar/hooks/view_issues_form_details_attendees'

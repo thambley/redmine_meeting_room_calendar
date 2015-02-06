@@ -32,30 +32,6 @@
           }
         });
       <% end -%>
-	  <% custom_field_id_attended = Setting["plugin_redmine_meeting_room_calendar"]["custom_field_id_attended"] %>
-	  <% if custom_field_id_attended.present? && custom_field_id_attended.to_i != 0 %>
-	    <%= javascript_tag do -%>
-	      $("label[for='issue_custom_field_values_<%= custom_field_id_attended %>']").append('<br/><a id="auto_fill_issue_custom_field_values_<%= custom_field_id_attended %>">Auto-Fill</a>');
-	      $("#auto_fill_issue_custom_field_values_<%= custom_field_id_attended %>").click(function(){
-			var values = [];
-			checked_users = $('label[for="issue_custom_field_values_<%= custom_field_id_invited %>"]').parent().find(':checked');
-			checked_users.each(function(){ values.push($(this).val()); });
-			var destination_select = $('select#issue_custom_field_values_<%= custom_field_id_attended %>');
-			if (destination_select.length > 0) {
-			  destination_select.val(values);
-			} else {
-			  $('label[for="issue_custom_field_values_<%= custom_field_id_attended %>"]').parent().find('input[type="checkbox"]').each(function() {
-				if ($.inArray($(this).val(),values) > -1) {
-				  $(this).prop('checked',true);
-				} else {
-				  $(this).prop('checked',false);
-				}
-			  });
-			}
-			return false;
-	      });
-		<% end -%>
-	  <% end -%>
     <% end -%>
   <% end -%>
 <% end %>
