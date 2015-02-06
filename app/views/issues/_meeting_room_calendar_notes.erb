@@ -1,0 +1,12 @@
+<% if (Setting["plugin_redmine_meeting_room_calendar"]["tracker_id"]).to_i == @issue.tracker_id %>
+  <% custom_field_id_notes = Setting["plugin_redmine_meeting_room_calendar"]["custom_field_id_notes"] %>
+  <% if custom_field_id_notes.present? && custom_field_id_notes.to_i != 0 %>
+    <%= javascript_tag do -%>
+      $(document).ready(function(){
+        $('div.description').after('<hr/><div class="cf_<%= custom_field_id_notes %>"><p><strong>' + $('th.cf_<%= custom_field_id_notes %>').text().replace(/:$/,'') + '</strong></p><div class="wiki">' + $('td.cf_<%= custom_field_id_notes %>').html() + '</div></div>');
+        $('th.cf_<%= custom_field_id_notes %>').hide();
+        $('td.cf_<%= custom_field_id_notes %>').hide();
+      });
+	<% end -%>
+  <% end -%>
+<% end %>
