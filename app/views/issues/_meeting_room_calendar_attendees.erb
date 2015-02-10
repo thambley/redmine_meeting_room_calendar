@@ -12,6 +12,9 @@
             checked_users = $('label[for="issue_custom_field_values_<%= custom_field_id_invited %>"]').parent().find(':checked');
             checked_users.each(function(){ values.push($(this).val()); });
             var destination_select = $('select#issue_custom_field_values_<%= custom_field_id_attended %>');
+            if (typeof(destination_select.select2) !== 'undefined') {
+              destination_select.select2("val", values);
+            }
             if (destination_select.length > 0) {
               destination_select.val(values);
             } else {
