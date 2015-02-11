@@ -1,0 +1,35 @@
+<% if (Setting["plugin_redmine_meeting_room_calendar"]["tracker_id"]).to_i == @issue.tracker_id %>
+  <% custom_field_id_attended = Setting["plugin_redmine_meeting_room_calendar"]["custom_field_id_attended"] %>
+  <% start_date = @issue.start_date %>
+  <% estimated_hours = @issue.estimated_hours %>
+
+  <%= javascript_tag do -%>
+    $(".icon-time-add").click(function() {
+      href = $(this).attr('href');
+      if(href) {
+        var separator = (href.match(/\?/) ? '&' : '?');
+    <% if start_date %>
+        href += separator + 'time_entry[spent_on]=<%= start_date %>';
+        separator = '&';
+    <% end %>
+    <% if estimated_hours %>
+        href += separator + 'time_entry[hours]=<%= estimated_hours %>';
+        separator = '&';
+    <% end %>
+    <% if custom_field_id_attended.present? && custom_field_id_attended.to_i != 0 %>
+      <% attended_field = @issue.custom_field_values.select { |cf| cf.custom_field_id == custom_field_id_attended.to_i }.first.value  %>
+        var user_ids = [<%= attended_field.join(',') %>];
+    <% else %>
+        var user_ids = [];
+    <% end %>
+        if (user_ids.length > 0) {
+          for (u = 0; u < user_ids.length; u++) {
+            href += separator + 'time_entry[user_ids][]=' + user_ids[u];
+              separator = '&';
+          }
+        }
+        $(this).attr('href',href);
+      }
+    });
+  <% end -%>
+<% end %>

@@ -1,3 +1,4 @@
 require 'redmine_meeting_room_calendar/hooks/view_issues_form_details_icalendar'
 require 'redmine_meeting_room_calendar/hooks/view_issues_form_details_attendees'
 require 'redmine_meeting_room_calendar/hooks/view_issues_form_details_notes'
+require 'redmine_meeting_room_calendar/hooks/view_issues_form_details_time_spent'
