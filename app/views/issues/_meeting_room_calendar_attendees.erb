@@ -7,6 +7,7 @@
       <% if custom_field_id_attended.present? && custom_field_id_attended.to_i != 0 %>
         <%= javascript_tag do -%>
           $("label[for='issue_custom_field_values_<%= custom_field_id_attended %>']").append('<br/><a id="auto_fill_issue_custom_field_values_<%= custom_field_id_attended %>">Auto-Fill</a>');
+          
           $("#auto_fill_issue_custom_field_values_<%= custom_field_id_attended %>").click(function(){
             var values = [];
             checked_users = $('label[for="issue_custom_field_values_<%= custom_field_id_invited %>"]').parent().find(':checked');
@@ -27,6 +28,23 @@
               });
             }
             return false;
+          });
+          
+          $(".icon-time-add").click(function() {
+            href = $(this).attr('href');
+            if(href) {
+			  var values = [];
+              checked_users = $('label[for="issue_custom_field_values_<%= custom_field_id_invited %>"]').parent().find(':checked');
+              checked_users.each(function(){ values.push($(this).val()); });
+			  if (values.length > 0) {
+				var separator = (href.match(/\?/) ? '&' : '?');
+				for (v = 0; v < values.length; v++) {
+				  href += separator + 'time_entry[user_ids][]=' + values[v];
+				  separator = '&';
+				}
+				$(this).attr('href',href);
+			  }
+            }
           });
         <% end -%>
       <% end -%>
