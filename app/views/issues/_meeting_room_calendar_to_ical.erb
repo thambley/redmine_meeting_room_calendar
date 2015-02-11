@@ -1,7 +1,7 @@
 <% if (Setting["plugin_redmine_meeting_room_calendar"]["tracker_id"]).to_i == @issue.tracker_id %>
   <%= stylesheet_link_tag("meeting_room_calendar_to_ical.css", :plugin => 'redmine_meeting_room_calendar') %>
   <%= javascript_tag do -%>
-    if ($('#content > .contextual .redmine-add-to-calendar-button').length == 0) {
+    if ($('#content > .contextual .redmine-meeting-room-calendar-to-ical-button').length == 0) {
       $('#content > .contextual').prepend(
         '<%= link_to l(:button_meeting_room_calendar_to_ical), {:controller => 'meeting_room_calendar_to_ical', :action => 'issue', :issue_id => @issue }, :class => 'icon icon-close redmine-meeting-room-calendar-to-ical-button' %>'
       )
