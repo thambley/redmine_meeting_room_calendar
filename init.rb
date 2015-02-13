@@ -16,6 +16,7 @@ Redmine::Plugin.register :redmine_meeting_room_calendar do
 
   settings :default => {"project_id" => "0",
                         "tracker_id" => "0",
+                        "time_entry_activity_id" => "0",
                         "custom_field_id_room" => "0",
                         "custom_field_id_start" => "0",
                         "custom_field_id_end" => "0",

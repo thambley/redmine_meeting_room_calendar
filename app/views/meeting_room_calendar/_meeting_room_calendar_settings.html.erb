@@ -37,6 +37,11 @@
   <%= label_tag("settings[custom_field_id_notes]", l(:label_setting_custom_field_id_notes)) %>
   <%= select_tag("settings[custom_field_id_notes]", options_for_select([["", 0]] + text_custom_fields_issues.collect{|c| [c.name, c.id]}, (@settings["custom_field_id_notes"] || 0))) %>
 </p>
+<%- activities = TimeEntryActivity.shared.active %>
+<p>
+  <%= label_tag("settings[time_entry_activity_id]", l(:label_setting_time_entry_activity_id)) %>
+  <%= select_tag("settings[time_entry_activity_id]", options_for_select([["", 0]] + activities.collect{|a| [a.name, a.id]}, (@settings["time_entry_activity_id"] || 0))) %>
+</p>
 <p>
   <%= label_tag("settings[show_project_menu]", l(:label_setting_show_project_menu)) %>
   <%= check_box_tag("settings[show_project_menu]", 1, (@settings["show_project_menu"] == '1')) %>

@@ -41,6 +41,7 @@ en:
   label_setting_custom_field_id_invited: "Custom field 'invited'"
   label_setting_custom_field_id_attended: "Custom field 'attended'"
   label_setting_custom_field_id_notes: "Custom field 'meeting notes'"
+  label_setting_time_entry_activity_id: "Time entry activity"
   
   label_setting_show_project_menu: "Show project menu"
   button_meeting_room_calendar_to_ical: "Add to calendar"

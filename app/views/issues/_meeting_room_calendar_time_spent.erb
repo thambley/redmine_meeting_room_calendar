@@ -2,6 +2,7 @@
   <% custom_field_id_attended = Setting["plugin_redmine_meeting_room_calendar"]["custom_field_id_attended"] %>
   <% custom_field_id_start    = Setting["plugin_redmine_meeting_room_calendar"]["custom_field_id_start"] %>
   <% custom_field_id_end      = Setting["plugin_redmine_meeting_room_calendar"]["custom_field_id_end"] %>
+  <% time_entry_activity_id   = Setting["plugin_redmine_meeting_room_calendar"]["time_entry_activity_id"] %>
 
   <%= javascript_tag do -%>
     $(".icon-time-add").click(function() {
@@ -12,6 +13,10 @@
         href += separator + 'time_entry[spent_on]=<%= @issue.start_date %>';
         separator = '&';
     <% end %>
+	<% if time_entry_activity_id.present? && time_entry_activity_id.to_i != 0 %>
+		href += separator + 'time_entry[activity_id]=<%= time_entry_activity_id %>';
+        separator = '&';
+	<% end %>
     <% if custom_field_id_start.present? && custom_field_id_start.to_i != 0 && custom_field_id_end.present? && custom_field_id_end.to_i != 0 %>
 		<% start_time = @issue.custom_field_values.select { |cf| cf.custom_field_id == custom_field_id_start.to_i }.first.value.split(':') %>
 		<% end_time = @issue.custom_field_values.select { |cf| cf.custom_field_id == custom_field_id_end.to_i }.first.value.split(':')  %>
