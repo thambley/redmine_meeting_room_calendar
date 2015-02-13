@@ -13,14 +13,14 @@
         href += separator + 'time_entry[spent_on]=<%= @issue.start_date %>';
         separator = '&';
     <% end %>
-	<% if time_entry_activity_id.present? && time_entry_activity_id.to_i != 0 %>
-		href += separator + 'time_entry[activity_id]=<%= time_entry_activity_id %>';
+    <% if time_entry_activity_id.present? && time_entry_activity_id.to_i != 0 %>
+        href += separator + 'time_entry[activity_id]=<%= time_entry_activity_id %>';
         separator = '&';
-	<% end %>
+    <% end %>
     <% if custom_field_id_start.present? && custom_field_id_start.to_i != 0 && custom_field_id_end.present? && custom_field_id_end.to_i != 0 %>
-		<% start_time = @issue.custom_field_values.select { |cf| cf.custom_field_id == custom_field_id_start.to_i }.first.value.split(':') %>
-		<% end_time = @issue.custom_field_values.select { |cf| cf.custom_field_id == custom_field_id_end.to_i }.first.value.split(':')  %>
-		<% time_entry_hours = (((end_time[0].to_f * 60.0) + (end_time[1].to_f)) - ((start_time[0].to_f * 60.0) + (start_time[1].to_f)))/60.0 %>
+        <% start_time = @issue.custom_field_values.select { |cf| cf.custom_field_id == custom_field_id_start.to_i }.first.value.split(':') %>
+        <% end_time = @issue.custom_field_values.select { |cf| cf.custom_field_id == custom_field_id_end.to_i }.first.value.split(':')  %>
+        <% time_entry_hours = (((end_time[0].to_f * 60.0) + (end_time[1].to_f)) - ((start_time[0].to_f * 60.0) + (start_time[1].to_f)))/60.0 %>
         href += separator + 'time_entry[hours]=<%= time_entry_hours %>';
         separator = '&';
     <% end %>
